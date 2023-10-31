@@ -3,7 +3,7 @@
 version = 3
 
 [[package]]
-name = "sugui-rs"
+name = "sugui"
 version = "0.1.0"
 dependencies = [
  "windows",
