@@ -1,3 +1,6 @@
+// #![windows_subsystem = "windows"]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 fn su(path: &mut str, param: &mut str) {
     let mut path_vec: Vec<u16> = path.encode_utf16().collect();
     path_vec.push(0);
