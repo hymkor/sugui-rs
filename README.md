@@ -17,15 +17,7 @@ Install
 
 Download the binary package from [Releases](https://github.com/hymkor/sugui-rs/releases) and extract the executable.
 
-### for scoop-installer
+Install with scoop-instabler is avaliable, but there exists the problem
+that the scoop-wrapper program `%USERPROFILE%\scoop\shims\sugui.exe`
+creates a console window.
 
-```
-scoop install https://raw.githubusercontent.com/hymkor/sugui-rs/master/sugui.json
-```
-
-or
-
-```
-scoop bucket add hymkor https://github.com/hymkor/scoop-bucket
-scoop install sugui
-```
