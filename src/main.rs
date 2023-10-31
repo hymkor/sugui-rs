@@ -20,7 +20,7 @@ fn su(path: &mut str, param: &mut str) {
             PCWSTR(path_vec.as_mut_ptr()),
             PCWSTR(param_vec.as_mut_ptr()),
             w!(""),
-            SHOW_WINDOW_CMD(0),
+            SHOW_WINDOW_CMD(1),
         );
     }
 }
