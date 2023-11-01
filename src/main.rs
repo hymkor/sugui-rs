@@ -1,12 +1,14 @@
 // #![windows_subsystem = "windows"]
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-fn su(path: &str, param: &str) {
-    let path_vec: Vec<u16> = path.encode_utf16().chain(Some(0)).collect();
-    let param_vec: Vec<u16> = param.encode_utf16().chain(Some(0)).collect();
+fn make_pcwstr(s: &str) -> windows::core::PCWSTR {
+    let v: Vec<u16> = s.encode_utf16().chain(Some(0).into_iter()).collect();
+    windows::core::PCWSTR::from_raw(v.as_ptr())
+}
 
+fn su(path: &str, param: &str) {
     unsafe {
-        use windows::core::{w, PCWSTR};
+        use windows::core::w;
         use windows::Win32::Foundation::HWND;
         use windows::Win32::UI::Shell::ShellExecuteW;
         use windows::Win32::UI::WindowsAndMessaging::SHOW_WINDOW_CMD;
@@ -14,8 +16,8 @@ fn su(path: &str, param: &str) {
         ShellExecuteW(
             HWND(0),
             w!("runas"),
-            PCWSTR(path_vec.as_ptr()),
-            PCWSTR(param_vec.as_ptr()),
+            make_pcwstr(path),
+            make_pcwstr(param),
             w!(""),
             SHOW_WINDOW_CMD(1),
         );
