@@ -11,7 +11,7 @@ fn su(path: &str, param: &str) {
         use windows::core::w;
         use windows::Win32::Foundation::HWND;
         use windows::Win32::UI::Shell::ShellExecuteW;
-        use windows::Win32::UI::WindowsAndMessaging::SHOW_WINDOW_CMD;
+        use windows::Win32::UI::WindowsAndMessaging::SW_SHOWNORMAL;
 
         ShellExecuteW(
             HWND(0),
@@ -19,7 +19,7 @@ fn su(path: &str, param: &str) {
             make_pcwstr(path),
             make_pcwstr(param),
             w!(""),
-            SHOW_WINDOW_CMD(1),
+            SW_SHOWNORMAL,
         );
     }
 }
