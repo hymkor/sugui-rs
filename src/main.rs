@@ -1,12 +1,9 @@
 // #![windows_subsystem = "windows"]
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-fn su(path: &mut str, param: &mut str) {
-    let mut path_vec: Vec<u16> = path.encode_utf16().collect();
-    path_vec.push(0);
-
-    let mut param_vec: Vec<u16> = param.encode_utf16().collect();
-    param_vec.push(0);
+fn su(path: &str, param: &str) {
+    let path_vec: Vec<u16> = path.encode_utf16().chain(Some(0)).collect();
+    let param_vec: Vec<u16> = param.encode_utf16().chain(Some(0)).collect();
 
     unsafe {
         use windows::core::{w, PCWSTR};
@@ -17,8 +14,8 @@ fn su(path: &mut str, param: &mut str) {
         ShellExecuteW(
             HWND(0),
             w!("runas"),
-            PCWSTR(path_vec.as_mut_ptr()),
-            PCWSTR(param_vec.as_mut_ptr()),
+            PCWSTR(path_vec.as_ptr()),
+            PCWSTR(param_vec.as_ptr()),
             w!(""),
             SHOW_WINDOW_CMD(1),
         );
@@ -27,15 +24,15 @@ fn su(path: &mut str, param: &mut str) {
 
 fn mains() -> Option<String> {
     let mut args = std::env::args().skip(1);
-    let mut path = match args.next() {
+    let path = match args.next() {
         None => return Some(String::from("few parameter")),
         Some(val) => val,
     };
-    let mut param = match args.next() {
+    let param = match args.next() {
         None => String::from(""),
         Some(val) => val,
     };
-    su(&mut path, &mut param);
+    su(&path, &param);
     None
 }
 
